@@ -102,9 +102,4 @@ public class DBOperations {
 			return false;
 		}
 	}
-	
-	public static void main(String[] args) {
-		create_user("posty", "postymalone");
-		System.out.println(hasUser("posty"));
-	}
 }
