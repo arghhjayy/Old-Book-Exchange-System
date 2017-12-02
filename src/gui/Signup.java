@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package gui;
+import db.DBOperations;
+import javax.swing.JOptionPane;
+import sun.security.pkcs11.Secmod;
 
-import db.DBConnect;
 
 /**
  *
@@ -143,10 +145,11 @@ public class Signup extends javax.swing.JFrame {
 		String fname = fname_field.getText();
 		String lname = lname_field.getText();
 		
-		System.out.println("Username: " + username + " password:"
-		+ password + " firstname:" + fname + " lastname:" + lname);
-		
-		//System.out.println(DBConnect.hasUser(username));
+		DBOperations.createUser(username, password, fname, lname);
+		JOptionPane.showMessageDialog(this, "Now please login");
+		//new Login().setVisible(true);
+		this.dispose();
+		new Login().setVisible(true);
     }//GEN-LAST:event_submit_buttonActionPerformed
 
 	/**

@@ -1,7 +1,9 @@
 package gui;
 
-import db.DBConnect;
+import db.DBOperations;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import sun.security.pkcs11.Secmod;
 
@@ -54,6 +56,11 @@ public class Login extends javax.swing.JFrame {
         signup_button.setText("Sign Up");
         signup_button.setCursor(new java.awt.Cursor(java.awt.Cursor.W_RESIZE_CURSOR));
         signup_button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        signup_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signup_buttonMouseClicked(evt);
+            }
+        });
         signup_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signup_buttonActionPerformed(evt);
@@ -87,10 +94,10 @@ public class Login extends javax.swing.JFrame {
                                     .addComponent(username_field, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(login_button, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(86, 86, 86))))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addComponent(signup_button, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,16 +131,26 @@ public class Login extends javax.swing.JFrame {
 		String username = username_field.getText().toString();
 		String password = new String(password_field.getPassword());
 		
-		System.out.println("Username: " + username + " and password: " + password);
-//		if(DBConnect.hasUser(username)){
-//			System.out.println("User " + username + " exists.");
-//		}
+		if(DBOperations.hasUser(username)) {
+			new Profile(username, DBOperations.getFirstName(username),
+					DBOperations.getLastName(username)).setVisible(true);
+			this.dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "You don't exist in our database, please signup.");
+		}
     }//GEN-LAST:event_login_buttonActionPerformed
 
     private void signup_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signup_buttonActionPerformed
         // TODO add your handling code here:
-		new Signup().setVisible(true);
+		//new Signup().setVisible(true);
     }//GEN-LAST:event_signup_buttonActionPerformed
+
+    private void signup_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signup_buttonMouseClicked
+        // TODO add your handling code here:
+		new Signup().setVisible(true);
+		this.dispose();
+    }//GEN-LAST:event_signup_buttonMouseClicked
 	
 	/**
 	 * @param args the command line arguments
